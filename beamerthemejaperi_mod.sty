@@ -9,43 +9,44 @@
 \usefonttheme{serif}
 \usepackage{ifthen}
 
-%Display current section, subsection and current/total slide number at headline
+%Display current section (left), subsection (center) and current/total slide number (right) at headline
+%If subsection has not been specified, will display section in the central heading
+%With this, subsections could be used instead of frametitles
 \setbeamertemplate{headline}
 {%
 	\leavevmode%
-	\ifthenelse{\not\equal{\insertsubsectionhead}{}}
-	{
-	\begin{beamercolorbox}[wd=.333\paperwidth,ht=2.5ex,dp=1.125ex]{section in head/foot}%
-		\hbox to .333\paperwidth{\hfil\insertsectionhead\hfil}
-	\end{beamercolorbox}%
-	\begin{beamercolorbox}[wd=.333\paperwidth,ht=2.5ex,dp=1.125ex]{subsection in head/foot}%
-		\hbox to .333\paperwidth{\hfil\textbf{\insertsubsectionhead}\hfil}
-	\end{beamercolorbox}%
-	}
-	{
+	\ifthenelse{\not\equal{\insertsubsectionhead}{}}{%
+		\begin{beamercolorbox}[wd=.333\paperwidth,ht=2.5ex,dp=1.125ex]{section in head/foot}%
+			\hbox to .333\paperwidth{\hfil\insertsectionhead\hfil}%
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.333\paperwidth,ht=2.5ex,dp=1.125ex]{subsection in head/foot}%
+			\hbox to .333\paperwidth{\hfil\textbf{\insertsubsectionhead}\hfil}
+		\end{beamercolorbox}%
+}%
+{%
 		\begin{beamercolorbox}[wd=.333\paperwidth,ht=2.5ex,left,dp=1.125ex]{section in head/foot}%
-		\hbox to .333\paperwidth{\hfil\hfil}
+			\hbox to .333\paperwidth{\hfil\hfil}%
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.333\paperwidth,ht=2.5ex,dp=1.125ex]{subsection in head/foot}%
+			\hbox to .333\paperwidth{\hfil\textbf{\insertsectionhead}\hfil}
+		\end{beamercolorbox}%
+	}%
+	\ifnum\c@framenumber=1%
+	\begin{beamercolorbox}[wd=0.333\paperwidth,ht=2.53ex,right,dp=1.125ex]{page number}%
+		\hbox to .333\paperwidth{\hfil\hfil}%
 	\end{beamercolorbox}%
-	\begin{beamercolorbox}[wd=.333\paperwidth,ht=2.5ex,dp=1.125ex]{subsection in head/foot}%
-		\hbox to .333\paperwidth{\hfil\textbf{\insertsectionhead}\hfil}
+	\else%
+	\begin{beamercolorbox}[wd=0.333\paperwidth,ht=2.53ex,right,dp=1.125ex]{page number}%
+		\hbox to .333\paperwidth{\hfil\insertframenumber/\inserttotalframenumber\hfil}%
 	\end{beamercolorbox}%
-	}
-	\ifnum\c@framenumber=1
-	\begin{beamercolorbox}[wd=0.333\paperwidth,ht=2.53ex,right,dp=1.125ex]{page number}
-		\hbox to .333\paperwidth{\hfil\hfil}
-	\end{beamercolorbox}
-	\else
-	\begin{beamercolorbox}[wd=0.333\paperwidth,ht=2.53ex,right,dp=1.125ex]{page number}
-		\hbox to .333\paperwidth{\hfil\insertframenumber/\inserttotalframenumber\hfil}
-	\end{beamercolorbox}
 	\fi%
-}
+}%
 
 %set colored footline
 \setbeamertemplate{footline}
 {%
-  \begin{beamercolorbox}[colsep=1.25pt]{lower separation line foot}
-  \end{beamercolorbox}
+	\begin{beamercolorbox}[colsep=1.25pt]{lower separation line foot}
+	\end{beamercolorbox}
 }
 
 % Display a slide before the current section with overview inf
@@ -75,8 +76,8 @@
 \setbeamercolor{example text}{fg=black} 
 \setbeamercolor{structure}{fg=black} 
 \setbeamercolor{page number}{bg=black!10}
- 
+
 \setbeamercolor{palette tertiary}{fg=black,bg=black!10} 
 \setbeamercolor{palette quaternary}{fg=black,bg=black!10} 
 
-\mode<all>
+\mode<all>
